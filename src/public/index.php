@@ -9,9 +9,9 @@ spl_autoload_register(function ($classname) {
 
 $config['displayErrorDetails'] = true;
 $config['db']['host']   = "localhost";
-$config['db']['user']   = "user";
-$config['db']['pass']   = "password";
-$config['db']['dbname'] = "exampleapp";
+$config['db']['user']   = "root";
+$config['db']['pass']   = "zgoba-90";
+$config['db']['dbname'] = "slim";
 
 
 $app = new \Slim\App(["settings" => $config]);

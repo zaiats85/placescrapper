@@ -9,8 +9,8 @@ environments:
     development:
         adapter: mysql
         host: localhost
-        name: exampleapp
-        user: user
-        pass: password
+        name: slim
+        user: root
+        pass: zgoba-90
         port: 3306
         charset: utf8

@@ -2,15 +2,53 @@
 <head>
     <title>Example Application</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <script src = "/bower_components/jquery/dist/jquery.js"?>></script>
+    <script src = "/js/placescrapper.js"></script>
+    <link rel="stylesheet" href="/CSS/style.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>Hi there!</h1>
+<?php $key = 'AIzaSyDt03v6DB23o87yO6-qYCd8hm8dKuZBs80'; ?>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Google Places API</h1>
+        <p>Testing purpose only</p>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="main-query-page" style="text-align: center">
+                <h3>Hi there, need some places?</h3>
+                <form role="form">
+                    <div class="form-group">
+                        <label for="query">I want to find</label>
+                        <input type="text" id="find-this" name="query" placeholder="software in Boston"/>
+                        <input type="hidden" name="key" class="apikey" value="<?php echo $key; ?>"/>
+                    </div>
+                    <button type="button" class="start_ajax_places btn btn-primary">Search it </button>
+                </form>
+                <div class="query-results">
+                    <table class="table table-bordered table-hover attach-here">
+                        <thead>
+                        <tr>
+                            <th>Place</th>
+                            <th>ID</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>John</td>
+                            <td>Doe</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" data-next="" class="next_ajax_places btn btn-success add-results">Next</button>
+                </div>
+        </div>
+    </div>
 
-<form class="pure-form" action="/greet" method="post">
-    <label for="name">Won't you tell me your name? <br />
-        <input type="text" id="name" name="name" />
-    </label>
-    <input type="submit" class="pure-button pure-button-primary" value="That's me!" />
-</form>
+</div>
+
+
 </body>
 </html>

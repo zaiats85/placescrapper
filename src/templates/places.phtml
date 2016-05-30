@@ -1,0 +1,41 @@
+<?php
+
+    function getPlaces(){
+        $host_places = "https://maps.googleapis.com/maps/api/place/textsearch/json?";
+        $host_details = "https://maps.googleapis.com/maps/api/place/details/json?";
+
+
+        $data = http_build_query($_POST);
+
+        if($_POST['query'] || $_POST['pagetoken']) {
+            $url = $host_places . $data;
+        } elseif ($_POST['placeid']) {
+            $url = $host_details . $data;
+        } 
+
+// Initialize cURL
+        $curl = curl_init();
+
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_VERBOSE, 1);
+        curl_setopt($curl, CURLOPT_HEADER, 1);
+
+// Set the options
+        curl_setopt($curl,CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_ENCODING ,"");
+
+        $response = curl_exec($curl);
+
+        $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+        $header = substr($response, 0, $header_size);
+        $body = substr($response, $header_size);
+
+//close the connection
+        curl_close($curl);
+        return $body;
+    }
+
+    $json = getPlaces();
+    echo $json;
+
+    ?>

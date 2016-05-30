@@ -12,7 +12,7 @@ $config['db']['host']   = "localhost";
 $config['db']['user']   = "root";
 $config['db']['pass']   = "zgoba-90";
 $config['db']['dbname'] = "slim";
-
+define('ROOT_DIR', dirname(dirname(__DIR__)) );
 
 $app = new \Slim\App(["settings" => $config]);
 $container = $app->getContainer();
@@ -34,6 +34,27 @@ $container['db'] = function ($c) {
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $pdo;
 };
+
+$app->get('/home', function (Request $request, Response $response) {
+    $this->logger->addInfo("home page loaded");
+    $response = $this->view->render($response, "home.phtml");
+
+    return $response;
+});
+
+$app->post('/greet', function (Request $request, Response $response) {
+    $this->logger->addInfo("greet answer page");
+    $response = $this->view->render($response, "greet.phtml", ["name"=>$name]);
+
+    return $response;
+});
+
+$app->post('/places', function (Request $request, Response $response) {
+    $this->logger->addInfo("places answer page");
+    $response = $this->view->render($response, "places.phtml");
+
+    return $response;
+});
 
 $app->get('/tickets', function (Request $request, Response $response) {
     $this->logger->addInfo("Ticket list");
@@ -81,3 +102,4 @@ $app->get('/ticket/{id}', function (Request $request, Response $response, $args)
 })->setName('ticket-detail');
 
 $app->run();
+?>

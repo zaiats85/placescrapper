@@ -1,0 +1,14 @@
+
+.main-query-page, .places-query.response {
+    text-align: center;
+}
+.detailed-list {
+    display: inline;
+    visibility: hidden;
+}
+input#query {
+    border: none
+}
+.query-results {
+    visibility: hidden;
+}

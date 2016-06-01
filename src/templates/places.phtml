@@ -7,7 +7,7 @@
 
         $data = http_build_query($_POST);
 
-        if($_POST['query'] || $_POST['pagetoken']) {
+        if  ($_POST['query'] || $_POST['pagetoken']) {
             $url = $host_places . $data;
         } elseif ($_POST['placeid']) {
             $url = $host_details . $data;

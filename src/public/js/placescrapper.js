@@ -51,10 +51,21 @@ $(document).ready(function(){
                 ); //.appendTo('attach-here table');
                     $('.attach-here').append(tr);
                     $('.query-results').css('visibility','visible');
+
+                    if(response.result.website) {
+                        // getInfo(response.result.website)
+                    } else {
+                        websiteurl = 'www.' + response.result.name + '.com';
+                        websiteurl = websiteurl.replace(/\s+/g, '');
+
+                        getInfo(websiteurl);
+                    }
+
                 }
             }
         });
     }
+    getInfo();
     function getNextPlaces(token){
         $.ajax({
             url: sendTo,
@@ -67,6 +78,18 @@ $(document).ready(function(){
                         getDetails(item.place_id);
                     });
                 }
+            }
+        });
+    }
+
+    function getInfo(website_url){
+        $.ajax({
+            url: '/personal_details',
+            dataType: 'JSON',
+            type: 'GET',
+            data: {website: website_url },
+            success: function(response){
+                console.log(response);
             }
         });
     }

@@ -56,6 +56,13 @@ $app->post('/places', function (Request $request, Response $response) {
     return $response;
 });
 
+$app->get('/personal_details', function (Request $request, Response $response) {
+    $this->logger->addInfo("personal details");
+    $response = $this->view->render($response, "personal_details.phtml");
+
+    return $response;
+});
+
 $app->get('/tickets', function (Request $request, Response $response) {
     $this->logger->addInfo("Ticket list");
     $mapper = new TicketMapper($this->db);

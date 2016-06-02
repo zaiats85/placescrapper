@@ -1,24 +1,27 @@
 <?php
 include('../public/simplehtmldom_1_5/simple_html_dom.php');
-define('URL', $_GET['website']);
+$url = $_POST['website'];
 $result = array();
 /**
  * Sitemap search
  */
 
-$sitemap = ['management', 'management-team', 'leadership', 'leadership-team', 'dedicated-development-teams', 'executive-team', 'company'];
+$sitemap = ['company/leadership/list_management','management', 'management-team', 'leadership', 'leadership-team', 'dedicated-development-teams', 'executive-team', 'company'];
 
 /**
  * Pages URLs search (the last word in URL - please try the given variants and combinations and add .php, .html or .xml):
  */
-$ulrs = ['management-team', 'leadership-team', 'management', 'leadership', 'team', 'contacts', 'contact-us', 'about', 'our-people', 'who-we-are', 'executive', 'board', 'executive-profiles', 'board-of-directors'];
+$urls = ['company/leadership/list_management', 'management-team', 'leadership-team', 'management', 'leadership', 'team', 'contacts', 'contact-us', 'about', 'our-people', 'who-we-are', 'executive', 'board', 'executive-profiles', 'board-of-directors'];
 
 /** HTML Tag Search:
  *  Attributes (search only among these):
  *  class/id;
  **/
 
-$class_id = ['team', 'team-member', 'title', 'position', 'teammate', 'member', 'staff', 'post', 'Personnel', 'Board', 'Directors', 'leadership', 'profile', 'board_directors_leadership', 'board-directors-leadership', 'people'];
+$class_id = ['thumbTitle', 'hs_cos_wrapper_module_14168594316521780','layout-widget-wrapper', 'team', 'team-member', 'title', 'position', 'teammate', 'member', 'staff', 'post', 'Personnel', 'Board', 'directors', 'leadership', 'profile', 'board_directors_leadership', 'board-directors-leadership', 'people'];
+
+
+
 /**
  * Keywords to search in div text (non-case-sensitive):
  */
@@ -29,15 +32,15 @@ $keywords = ['CEO', 'CFO', 'CTO', 'COO', 'VP', 'Vice President', 'Director', 'Ex
 /**
  *
  */
-function getAllContent($result, $sitemap)
-{
-//    $content = file_get_html(URL . 'sitemap.xml');
-//    echo 'website: ' . URL . 'sitemap.xml: ' . $content;
-    $url = 'http://www.erecruit.com/';
+function getAllContent($url,$result, $sitemap, $class_id, $keywords, $urls) {
+//    $url = 'http://www.erecruit.com/';
 //    $url = 'http://datalinedata.com/';
 //    $url = 'http://www.softelegance.com/';
 //    $url = 'http://nanigans.com/';
 //    $url = 'http://www.pixability.com/';
+//    $url = 'http://www.grouppangea.com/';
+//    $url = 'http://www.sap.com/';
+    $url = 'http://www.tibco.com/';
 
     $content = file_get_contents($url . 'sitemap.xml');
 
@@ -47,7 +50,7 @@ function getAllContent($result, $sitemap)
      */
 //    libxml_use_internal_errors(true);
 //
-//    $doc = simplexml_load_string($content);
+//    $doc = simplexml_load_string($con tent);
 //    $xml = explode("\n", $content);
 //
 //    if (!$doc) {
@@ -68,36 +71,60 @@ function getAllContent($result, $sitemap)
             $sitemap_url =  substr($sitemap_url, $counter);
             $result[] = $sitemap_url;
         }
+        echo "succeeded scrapping sitemap <br>";
     } else {
-        echo('Sitemap missing or is not xml');
+        echo('sitemap missing or is not valid xml, proceed to url dictionary');
+        foreach ($urls as $child) {
+            $result[] = $url . $child;
+        }
+        echo "proceeding with urls dictionary <br>";
     }
+
     $intersection = array_intersect($result, $sitemap);
     if($intersection) {
+        echo "url dictionary has " . count($intersection) . " matches <br>";
         foreach ($intersection as &$value) {
             $value = $url.$value;
         }
         unset($value);
+    } else {
+        echo 'sorry no url matches found';
     }
+
     foreach ($intersection as $value) {
-        $pas = (string)$value;
-        $content = file_get_html($pas);
-        $ter = $content->find('a[href]');
-        var_dump($ter);
+        $sitemap_url = (string)$value;
+        $html = file_get_html($sitemap_url);
+
+        echo "<h3>class, id, keyword matches on "  . $sitemap_url . ": </h3><br>";
+        echo "<strong>keywords:</strong><br>";
+        foreach ($keywords as $item) {
+            $pos = strpos($html, $item);
+            if($pos !== false) {
+                echo $item . "<br>";
+            }
+        }
+        echo "<strong>classes and id match:</strong><br>";
+        foreach ($class_id as $element) {
+            $class = '.' . $element;
+            $id = '#' . $element;
+
+            $class = $html->find($class);
+            $id = $html->find($id);
+
+            foreach ($class as $item) {
+                echo $item->innertext . "<br>";
+            }
+            foreach ($id as $item) {
+                echo $item->plaintext . "<br>";
+            }
+        }
+
+        $html->clear();
+        unset($html);
     }
-
-
-
-
-
-//        set_time_limit(120);
-
-
 }
 
-getAllContent($result, $sitemap);
-//$content->clear();
-//unset($content);
-
-//echo memory_get_usage() . '<br>';
+getAllContent($url,$result, $sitemap, $class_id, $keywords, $urls);
+memory_get_usage();
 
 ?>

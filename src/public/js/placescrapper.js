@@ -85,11 +85,13 @@ $(document).ready(function(){
     function getInfo(website_url){
         $.ajax({
             url: '/personal_details',
-            dataType: 'JSON',
+            dataType: 'TEXT',
             type: 'GET',
             data: {website: website_url },
             success: function(response){
-                console.log(response);
+                $('.parse-results').append(response);
+                console.log(typeof response);
+                alert('ura');
             }
         });
     }

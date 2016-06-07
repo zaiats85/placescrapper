@@ -104,6 +104,7 @@ function getAllContent($url,$result_php, $sitemap, $class_id, $keywords, $urls) 
     $return = new stdClass();
     $return->success = true;
     $return->errorMessage = "";
+    $return->memory_usage2 = memory_get_peak_usage();
 
     //Assign the altered data to a property of $return
     $return->data['json']  = $result_php;
@@ -168,7 +169,7 @@ function searchDetails($final_url_search, $url, $keywords, $class_id){
             $search_details['classes_match'] = (bool) false;
             $search_details['ids_match'] = (bool) false;
         }
-
+        
         return $search_details;
 }
 

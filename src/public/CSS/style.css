@@ -9,6 +9,12 @@
 input#query {
     border: none
 }
-.query-results {
+.query-results, .parse-attach-here, .search-attach-here, .detailed-attach-here {
     visibility: hidden;
+}
+.small {
+    font-size: 12px !important;
+}
+.start_ajax_places .fa-spinner {
+    display: none;
 }

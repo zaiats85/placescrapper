@@ -1,10 +1,10 @@
 <?php
-
     function getPlaces(){
+
         $host_places = "https://maps.googleapis.com/maps/api/place/textsearch/json?";
         $host_details = "https://maps.googleapis.com/maps/api/place/details/json?";
 
-
+        
         $data = http_build_query($_POST);
 
         if  ($_POST['query'] || $_POST['pagetoken']) {
@@ -32,10 +32,12 @@
 
 //close the connection
         curl_close($curl);
+
         return $body;
     }
 
     $json = getPlaces();
-    echo $json;
 
+    echo $json;
+s
     ?>

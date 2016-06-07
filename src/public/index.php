@@ -56,7 +56,7 @@ $app->post('/places', function (Request $request, Response $response) {
     return $response;
 });
 
-$app->get('/personal_details', function (Request $request, Response $response) {
+$app->post('/personal_details', function (Request $request, Response $response) {
     $this->logger->addInfo("personal details");
     $response = $this->view->render($response, "personal_details.phtml");
 

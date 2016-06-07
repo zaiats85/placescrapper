@@ -6,6 +6,7 @@
     <script src = "/js/placescrapper.js"></script>
     <link rel="stylesheet" href="/CSS/style.css">
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -25,34 +26,89 @@
                         <input type="text" id="find-this" name="query" placeholder="software in Boston"/>
                         <input type="hidden" name="key" class="apikey" value="<?php echo $key; ?>"/>
                     </div>
-                    <button type="button" class="start_ajax_places btn btn-primary">Search it </button>
+                    <button type="button" class="start_ajax_places btn btn-primary btn-lg">
+                        Search it
+                        <i id="loading" class="fa fa-spinner fa-spin" ></i>
+                    </button>
                 </form>
                 <div class="query-results">
                     <table class="table table-bordered table-hover attach-here">
                         <thead>
-                        <tr>
-                            <th>Place</th>
-                            <th>website</th>
-                            <th>formatted_address</th>
-                            <th>formatted_phone_number</th>
-                            <th>international_phone_number</th>
-                            <th>types</th>
-                        </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>PlacePlace</th>
+                                <th>website</th>
+                                <th>formatted_address</th>
+                                <th>international_phone_number</th>
+                                <th>types</th>
+                                <th>details</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                        </tr>
                         </tbody>
                     </table>
 
                     <button type="button" data-next="" class="next_ajax_places btn btn-success add-results">Next</button>
                 </div>
-                <div class="parse-results">
+                <div class="container parse-results">
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
 
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3 class="modal-title">
+                                    </h3>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-bordered table-hover parse-attach-here">
+                                        <thead>
+                                        <tr>
+                                            <th>sitemap</th>
+                                            <th>url matches</th>
+                                            <th>dictionary url</th>
+                                            <th>memory usage</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+
+                                    <table class="table table-bordered table-hover search-attach-here">
+                                        <thead>
+                                        <tr>
+                                            <th>search url</th>
+                                            <th>keywords match</th>
+                                            <th>classes match</th>
+                                            <th>ids match</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    <div class="detailed-attach-here">
+                                        <h3>keywords 250 char text</h3>
+                                        <p class="keywords"></p>
+                                        <h3>classes inner text</h3>
+
+                                        <p class="classes"></p>
+                                        <h3>ids inner text</h3>
+
+                                        <p class="ids"></p>
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
         </div>
     </div>
-
 </div>
 
 
